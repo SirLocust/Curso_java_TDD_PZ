@@ -1,19 +1,35 @@
 package com.platzi.javatest.util;
 
-public class StringUtilTest {
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-    public static void main(String... args) {
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 
-        checkEquals(StringUtil.repeat("hola", 3), "holaholahola");
+class StringUtilTest {
 
-        checkEquals(StringUtil.repeat("hola", 1), "hola");
+    @Test
+    public void repeat_string_once() {
+
+        assertEquals("hola", StringUtil.repeat("hola", 1));
+    }
+
+    @Test
+    public void repeat_string_multiple_times() {
+        assertEquals("holaholahola", StringUtil.repeat("hola", 3));
 
     }
 
-    private static void checkEquals(String actual, String strExpected) {
-
-        if (!actual.equals(strExpected)) {
-            throw new RuntimeException(actual + " is not equal that " + strExpected);
-        }
+    @Test
+    public void repeat_string_zero_times() {
+        assertEquals("", StringUtil.repeat("hola", 0));
     }
+
+    @Test
+    public void repeat_string_negative() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+
+            StringUtil.repeat("hola", -1);
+        });
+    }
+
 }
