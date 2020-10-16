@@ -13,7 +13,7 @@ public class PasswordUtli {
         if (password.matches("[a-zA-Z]+")) {
             return SecurityLeven.WEAK;
         }
-        if (password.matches("[A-Za-z0-9)]")) {
+        if (password.matches("[A-Za-z0-9]+")) {
             return SecurityLeven.MEDIUM;
         }
 
