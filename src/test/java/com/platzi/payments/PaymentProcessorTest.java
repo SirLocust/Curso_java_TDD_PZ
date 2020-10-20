@@ -5,19 +5,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.platzi.payments.PaymentResponse.PaymentStatus;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public class PaymentProcessorTest {
 
+    private PaymentGateway paymentGateway;
+    private PaymentProcessor paymentProcessor;
+
+    @BeforeEach
+    public void setup() {
+        this.paymentGateway = Mockito.mock(PaymentGateway.class);
+        this.paymentProcessor = new PaymentProcessor(paymentGateway);
+    }
+
     @Test
+
     public void payment_is_correct() {
 
-        PaymentGateway paymentGateway = Mockito.mock(PaymentGateway.class);
-
         Mockito.when(paymentGateway.requestPayment(Mockito.any())).thenReturn(new PaymentResponse(PaymentStatus.OK));
-
-        PaymentProcessor paymentProcessor = new PaymentProcessor(paymentGateway);
 
         boolean result = paymentProcessor.makePayment(1000);
 
@@ -27,11 +34,7 @@ public class PaymentProcessorTest {
     @Test
     public void payment_is_wrong() {
 
-        PaymentGateway paymentGateway = Mockito.mock(PaymentGateway.class);
-
         Mockito.when(paymentGateway.requestPayment(Mockito.any())).thenReturn(new PaymentResponse(PaymentStatus.ERROR));
-
-        PaymentProcessor paymentProcessor = new PaymentProcessor(paymentGateway);
 
         boolean result = paymentProcessor.makePayment(1000);
 
